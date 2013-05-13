@@ -8,12 +8,15 @@ JTESTDIR=$(SRCDIR)/java/test/com/lightboxtechnologies/lightgrep
 JAVA_SOURCES=\
 	ContextHandle.java \
 	ContextOptions.java \
-	Handle.java \
+	FSMHandle.java \
+  Handle.java \
 	HitCallback.java \
 	KeyOptions.java \
 	KeywordException.java \
 	LibraryLoader.java \
- 	ParserHandle.java \
+	PatternHandle.java \
+	PatternInfo.java \
+	PatternMapHandle.java \
 	ProgramHandle.java \
 	ProgramOptions.java \
 	SearchHit.java \
@@ -22,7 +25,12 @@ JAVA_SOURCES:=$(addprefix $(JSRCDIR)/,$(JAVA_SOURCES))
 JAVA_CLASSES=$(patsubst %,$(BINDIR)/%.class,$(basename $(JAVA_SOURCES)))
 JAVA_CLASS_NAMES=$(subst /,.,$(subst $(SRCDIR)/java/src/,,$(basename $(JAVA_SOURCES))))
 
-JAVA_TESTS=LightgrepTest.java
+JAVA_TESTS=\
+	AbstractSearchTest.java \
+	LightgrepTest.java \
+	SearchArrayTest.java \
+	SearchDirectByteBufferTest.java \
+	SearchWrappedByteBufferTest.java
 JAVA_TESTS:=$(addprefix $(JTESTDIR)/,$(JAVA_TESTS))
 JAVA_TEST_CLASSES=$(patsubst %,$(BINDIR)/%.class,$(basename $(JAVA_TESTS)))
 
@@ -44,10 +52,10 @@ MKDIR=mkdir
 
 CPPFLAGS=-MMD -MP
 CXXFLAGS=-std=c++0x -O3 -W -Wall -Wextra -pedantic -pipe -fPIC
-INCLUDES=-isystem /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.6.x86_64/include -isystem /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.6.x86_64/include/linux -I../lightgrep/include -Ibin/src/jni
+INCLUDES=-isystem /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.19.x86_64/include -isystem /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.19.x86_64/include/linux -I../lg-gpl/include -Ibin/src/jni
 
 LDFLAGS=-shared
-LDPATHS=-L../lightgrep/lib -L../lightgrep/src/bin/lib
+LDPATHS=-L../lg-gpl/src/lib/.libs
 LDLIBS=-llightgrep -licudata -licuuc
 
 all: lib test jar
@@ -59,7 +67,7 @@ debug: all
 lib: $(LIB)
 
 test: $(LIB) $(JAVA_TEST_CLASSES)
-	LD_LIBRARY_PATH=../lightgrep/lib $(JAVA) -cp /usr/share/java/junit.jar:bin/src/java/src:bin/src/java/test -Djava.library.path=bin/src/jni:../lightgrep/lib:../lightgrep/bin/src/lib org.junit.runner.JUnitCore com.lightboxtechnologies.lightgrep.LightgrepTest
+	LD_LIBRARY_PATH=../lg-gpl/src/lib/.libs $(JAVA) -cp /usr/share/java/junit.jar:bin/src/java/src:bin/src/java/test -Djava.library.path=bin/src/jni:../lg-gpl/src/lib/.libs org.junit.runner.JUnitCore com.lightboxtechnologies.lightgrep.LightgrepTest com.lightboxtechnologies.lightgrep.SearchArrayTest com.lightboxtechnologies.lightgrep.SearchDirectByteBufferTest com.lightboxtechnologies.lightgrep.SearchWrappedByteBufferTest
 
 jar: $(BINDIR)/src/java/jlightgrep.jar
 
