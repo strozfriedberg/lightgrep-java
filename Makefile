@@ -27,10 +27,15 @@ JAVA_CLASS_NAMES=$(subst /,.,$(subst $(SRCDIR)/java/src/,,$(basename $(JAVA_SOUR
 
 JAVA_TESTS=\
 	AbstractSearchTest.java \
+	BaseSearchTest.java \
+	BaseStartsWithTest.java \
 	LightgrepTest.java \
 	SearchArrayTest.java \
 	SearchDirectByteBufferTest.java \
-	SearchWrappedByteBufferTest.java
+	SearchWrappedByteBufferTest.java \
+	StartsWithArrayTest.java \
+	StartsWithDirectByteBufferTest.java \
+	StartsWithWrappedByteBufferTest.java
 JAVA_TESTS:=$(addprefix $(JTESTDIR)/,$(JAVA_TESTS))
 JAVA_TEST_CLASSES=$(patsubst %,$(BINDIR)/%.class,$(basename $(JAVA_TESTS)))
 
@@ -67,7 +72,7 @@ debug: all
 lib: $(LIB)
 
 test: $(LIB) $(JAVA_TEST_CLASSES)
-	LD_LIBRARY_PATH=../lg-gpl/src/lib/.libs $(JAVA) -cp /usr/share/java/junit.jar:bin/src/java/src:bin/src/java/test -Djava.library.path=bin/src/jni:../lg-gpl/src/lib/.libs org.junit.runner.JUnitCore com.lightboxtechnologies.lightgrep.LightgrepTest com.lightboxtechnologies.lightgrep.SearchArrayTest com.lightboxtechnologies.lightgrep.SearchDirectByteBufferTest com.lightboxtechnologies.lightgrep.SearchWrappedByteBufferTest
+	LD_LIBRARY_PATH=../lg-gpl/src/lib/.libs $(JAVA) -cp /usr/share/java/junit.jar:bin/src/java/src:bin/src/java/test -Djava.library.path=bin/src/jni:../lg-gpl/src/lib/.libs org.junit.runner.JUnitCore com.lightboxtechnologies.lightgrep.LightgrepTest com.lightboxtechnologies.lightgrep.SearchArrayTest com.lightboxtechnologies.lightgrep.SearchDirectByteBufferTest com.lightboxtechnologies.lightgrep.SearchWrappedByteBufferTest com.lightboxtechnologies.lightgrep.StartsWithArrayTest com.lightboxtechnologies.lightgrep.StartsWithDirectByteBufferTest com.lightboxtechnologies.lightgrep.StartsWithWrappedByteBufferTest
 
 jar: $(BINDIR)/src/java/jlightgrep.jar
 
