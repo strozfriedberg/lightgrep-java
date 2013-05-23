@@ -17,6 +17,7 @@ JAVA_SOURCES=\
 	PatternHandle.java \
 	PatternInfo.java \
 	PatternMapHandle.java \
+	ProgramException.java \
 	ProgramHandle.java \
 	ProgramOptions.java \
 	SearchHit.java \
