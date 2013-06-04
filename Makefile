@@ -11,8 +11,10 @@ JAVA_SOURCES=\
 	FSMHandle.java \
   Handle.java \
 	HitCallback.java \
+	HitContext.java \
 	KeyOptions.java \
 	KeywordException.java \
+	LGUtil.java \
 	LibraryLoader.java \
 	PatternHandle.java \
 	PatternInfo.java \
@@ -27,9 +29,14 @@ JAVA_CLASSES=$(patsubst %,$(BINDIR)/%.class,$(basename $(JAVA_SOURCES)))
 JAVA_CLASS_NAMES=$(subst /,.,$(subst $(SRCDIR)/java/src/,,$(basename $(JAVA_SOURCES))))
 
 JAVA_TESTS=\
+	AbstractDataDrivenTest.java \
 	AbstractSearchTest.java \
+	BaseGetHitContextTest.java \
 	BaseSearchTest.java \
 	BaseStartsWithTest.java \
+	GetHitContextArrayTest.java \
+	GetHitContextDirectByteBufferTest.java \
+	GetHitContextWrappedByteBufferTest.java \
 	LightgrepTest.java \
 	SearchArrayTest.java \
 	SearchDirectByteBufferTest.java \
@@ -73,7 +80,7 @@ debug: all
 lib: $(LIB)
 
 test: $(LIB) $(JAVA_TEST_CLASSES)
-	LD_LIBRARY_PATH=../lg-gpl/src/lib/.libs $(JAVA) -cp /usr/share/java/junit.jar:bin/src/java/src:bin/src/java/test -Djava.library.path=bin/src/jni:../lg-gpl/src/lib/.libs org.junit.runner.JUnitCore com.lightboxtechnologies.lightgrep.LightgrepTest com.lightboxtechnologies.lightgrep.SearchArrayTest com.lightboxtechnologies.lightgrep.SearchDirectByteBufferTest com.lightboxtechnologies.lightgrep.SearchWrappedByteBufferTest com.lightboxtechnologies.lightgrep.StartsWithArrayTest com.lightboxtechnologies.lightgrep.StartsWithDirectByteBufferTest com.lightboxtechnologies.lightgrep.StartsWithWrappedByteBufferTest
+	LD_LIBRARY_PATH=../lg-gpl/src/lib/.libs $(JAVA) -cp /usr/share/java/junit.jar:bin/src/java/src:bin/src/java/test -Djava.library.path=bin/src/jni:../lg-gpl/src/lib/.libs org.junit.runner.JUnitCore com.lightboxtechnologies.lightgrep.LightgrepTest com.lightboxtechnologies.lightgrep.SearchArrayTest com.lightboxtechnologies.lightgrep.SearchDirectByteBufferTest com.lightboxtechnologies.lightgrep.SearchWrappedByteBufferTest com.lightboxtechnologies.lightgrep.StartsWithArrayTest com.lightboxtechnologies.lightgrep.StartsWithDirectByteBufferTest com.lightboxtechnologies.lightgrep.StartsWithWrappedByteBufferTest com.lightboxtechnologies.lightgrep.GetHitContextArrayTest com.lightboxtechnologies.lightgrep.GetHitContextDirectByteBufferTest com.lightboxtechnologies.lightgrep.GetHitContextWrappedByteBufferTest
 
 jar: $(BINDIR)/src/java/jlightgrep.jar
 
@@ -101,6 +108,6 @@ $(JAVA_CLASSES): $(JAVA_SOURCES) | $(BINDIR)/src/java/src
 	$(JAVAC) -d $(BINDIR)/src/java/src -cp $(BINDIR)/src/java/src -Xlint $^
 
 $(JAVA_TEST_CLASSES): $(JAVA_TESTS) | $(BINDIR)/src/java/test
-	$(JAVAC) -d $(BINDIR)/src/java/test -cp $(BINDIR)/src/java/src:$(BINDIR)/src/java/test:/usr/share/java/junit.jar -Xlint $^
+	$(JAVAC) -encoding UTF-8 -d $(BINDIR)/src/java/test -cp $(BINDIR)/src/java/src:$(BINDIR)/src/java/test:/usr/share/java/junit.jar -Xlint $^
 
 .PHONY: all clean example lib jar test
