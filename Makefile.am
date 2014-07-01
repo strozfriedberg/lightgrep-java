@@ -82,11 +82,12 @@ TEST_CLASSPATH:=$(SRC_DIR):$(TEST_DIR):$(JUNIT_JAR)
 compile_test: $(TEST_SOURCE_FILES) $(SRC_CLASS_FILES)
 	$(JAVAC) -encoding UTF-8 -d $(TEST_DIR) -cp $(TEST_CLASSPATH) -Xlint $(filter %.java,$^)
 
-TESTS = run_test
+TESTS = $(TEST_DIR)/run_test.sh
 
-run_test: $(TEST_CLASS_FILES)
-	$(JAVA) -cp $(TEST_CLASSPATH) -Djava.library.path=src/jni/.libs org.junit.runner.JUnitCore $(filter-out com.lightboxtechnologies.lightgrep.Base%,$(filter-out com.lightboxtechnologies.lightgrep.Abstract%,$(TEST_CLASS_NAMES)))
+$(TEST_DIR)/run_test.sh: $(TEST_CLASS_FILES)
+	echo -e "#!/bin/bash -ex\n\n$(JAVA) -cp $(TEST_CLASSPATH) -Djava.library.path=src/jni/.libs org.junit.runner.JUnitCore $(filter-out com.lightboxtechnologies.lightgrep.Base%,$(filter-out com.lightboxtechnologies.lightgrep.Abstract%,$(TEST_CLASS_NAMES)))" >$@
+	chmod a+x $@
 
-.PHONY: compile_src compile_test run_test
+.PHONY: compile_src compile_test
 
 MOSTLYCLEANFILES=src/jni/jlightgrep.h $(SRC_CLASS_FILES:.class=*.class) $(TEST_CLASS_FILES:.class=*.class) $(noinst_jar_DATA)

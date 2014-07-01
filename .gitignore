@@ -24,5 +24,9 @@
 /m4/lt~obsolete.m4
 /src/java/**/*.class
 /src/java/src/jlightgrep.jar
+/src/java/test/run_test.sh
+/src/java/test/run_test.sh.log
+/src/java/test/run_test.sh.trs
 /src/jni/jlightgrep.h
 /stamp-h1
+/test-suite.log
