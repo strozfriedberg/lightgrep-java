@@ -16,6 +16,7 @@
 /config.log
 /config.status
 /configure
+/example/*.class
 /libtool
 /m4/libtool.m4
 /m4/ltoptions.m4
