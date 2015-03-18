@@ -44,7 +44,7 @@ SRC_CLASS_FILES:=$(SRC_SOURCE_FILES:.java=.class)
 
 src/jni/jlightgrep.lo: src/jni/jlightgrep.h
 
-src/jni/jlightgrep.h: src/jni/jlightgrep.cpp
+src/jni/jlightgrep.h: src/jni/jlightgrep.cpp $(SRC_SOURCE_FILES)
 	$(JAVAH) -o $@ -jni -cp $(SRC_DIR) $(SRC_CLASS_NAMES)
 
 src/java/src/jlightgrep.jar: $(SRC_CLASS_FILES)
