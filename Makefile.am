@@ -22,6 +22,7 @@ path_to_class = $(subst /,.,$(subst $(1)/,,$(basename $(2))))
 SRC_SOURCE_FILES:=\
 	$(SRC_DIR)/$(PKG_DIR)/ContextHandle.java \
 	$(SRC_DIR)/$(PKG_DIR)/ContextOptions.java \
+	$(SRC_DIR)/$(PKG_DIR)/DecoderHandle.java \
 	$(SRC_DIR)/$(PKG_DIR)/FSMHandle.java \
   $(SRC_DIR)/$(PKG_DIR)/Handle.java \
 	$(SRC_DIR)/$(PKG_DIR)/HitCallback.java \
