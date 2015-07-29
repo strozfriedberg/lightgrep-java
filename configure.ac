@@ -59,8 +59,8 @@ AC_SUBST([JNI_CPPFLAGS])
 AC_SUBST([JNI_CXXFLAGS])
 AC_SUBST([JNI_LDFLAGS])
 
-JUNIT_JAR=/usr/share/java/junit.jar
-AC_SUBST([JUNIT_JAR])
+JUNIT_JARS=/usr/share/java/junit.jar:/usr/share/java/hamcrest/core.jar
+AC_SUBST([JUNIT_JARS])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

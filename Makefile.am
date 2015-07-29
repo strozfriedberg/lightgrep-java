@@ -78,7 +78,7 @@ TEST_CLASS_FILES:=$(TEST_SOURCE_FILES:.java=.class)
 
 $(TEST_CLASS_FILES): compile_test
 
-TEST_CLASSPATH:=$(SRC_DIR):$(TEST_DIR):$(JUNIT_JAR)
+TEST_CLASSPATH:=$(SRC_DIR):$(TEST_DIR):$(JUNIT_JARS)
 
 compile_test: $(TEST_SOURCE_FILES) $(SRC_CLASS_FILES)
 	$(JAVAC) -encoding UTF-8 -d $(TEST_DIR) -cp $(TEST_CLASSPATH) -Xlint $(filter %.java,$^)
